@@ -1,7 +1,7 @@
 
 FROM eclipse-temurin:21-jdk
 LABEL maintainer="2486165@cognizant.com"
-LABEL version="1.0"
+LABEL version="2.0"
 
 WORKDIR /test-app
 
