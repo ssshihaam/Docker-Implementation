@@ -51,7 +51,7 @@ public class DeleteSkillSet {
 	private SoftAssert softAssert;
 
 	// setup
-    @Parameters("browser")
+	@Parameters("browser")
     @BeforeClass
     public void setUp(String browser) throws Exception {
         
@@ -94,6 +94,7 @@ public class DeleteSkillSet {
         driver.manage().window().maximize();
         cleanScreenshotsDirectory();
     }
+
 	
 	public void login(String username, String password) {
 		WebElement usernameInputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("username")));
@@ -248,31 +249,32 @@ public class DeleteSkillSet {
 		softAssert.assertAll();
 	}
 
-	// Test 4 - add job Category
 	@Parameters("browser")
-	@Test(priority = 4, dependsOnMethods = "testJobCategoriesPage")
-	public void testAddCategory(String browser) {
-		if(browser.equals("chrome")) {
-			addCategory("Test_Engineer_chrome");
-		}else {
-			addCategory("test_engineer_edge");
-		}
-		takeScreenshot("Category Added");
-		softAssert.assertAll();
-	}
+    @Test(priority = 4, dependsOnMethods = "testJobCategoriesPage")
+    public void testAddCategory(String browser) {
+        switch (browser.toLowerCase()) {
+            case "chrome"   -> addCategory("Test_Engineer_chrome");
+            case "firefox"  -> addCategory("Test_Engineer_firefox");
+            case "edge"     -> addCategory("Test_Engineer_edge");
+            default         -> addCategory("Test_Engineer_default");
+        }
+        takeScreenshot("Category Added");
+        softAssert.assertAll();
+    }
 
-	// Test 5 – delete job category
-	@Parameters("browser")
-	@Test(priority = 5, dependsOnMethods = "testAddCategory")
-	public void testDeleteCategory(String browser) {
-		if(browser.equals("chrome")) {
-			deleteCategory("Test_Engineer_chrome");
-		}else {
-			deleteCategory("test_engineer_edge");
-		}
-		takeScreenshot("Category Deleted");
-		softAssert.assertAll();
-	}
+    @Parameters("browser")
+    @Test(priority = 5, dependsOnMethods = "testAddCategory")
+    public void testDeleteCategory(String browser) {
+        switch (browser.toLowerCase()) {
+            case "chrome"   -> deleteCategory("Test_Engineer_chrome");
+            case "firefox"  -> deleteCategory("Test_Engineer_firefox");
+            case "edge"     -> deleteCategory("Test_Engineer_edge");
+            default         -> deleteCategory("Test_Engineer_default");
+        }
+        takeScreenshot("Category Deleted");
+        softAssert.assertAll();
+    }
+
 
 	// tear down
 	@AfterClass
